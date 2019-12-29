@@ -1,7 +1,7 @@
 package com.company.parsing;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.Writer;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +18,17 @@ public class ParsingSettings
         return links;
     }
 
-    public FileWriter getOutputFile()
+    public Writer getWriter()
     {
-        return outputFile;
+        return writer;
     }
 
-    public void setOutputFile(FileWriter outputFile)
+    public void setWriter(Writer writer)
     {
-        this.outputFile = outputFile;
+        this.writer = writer;
     }
 
     private List<File> inputFiles = new ArrayList<>();
     private List<URL> links = new ArrayList<>();
-    private FileWriter outputFile;
+    private Writer writer;
 }

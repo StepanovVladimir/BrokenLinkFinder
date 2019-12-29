@@ -1,16 +1,18 @@
-package com.company;
+package com.company.saving;
 
-import java.io.FileWriter;
+import com.company.Link;
+
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 
-public class LinksToCSVSaver
+public class LinksToCSVSaver implements Saver<List<Link>>
 {
-    public void save(List<Link> links, FileWriter writer) throws IOException
+    public void save(List<Link> links, Writer writer) throws IOException
     {
         for (Link link : links)
         {
-            writer.write(link.getUrl().toString() + ",");
+            writer.write(link.getUrl() + ",");
             writer.write(link.getResponseCode() + ",");
             writer.write(link.getResponseMessage() + "\n");
         }

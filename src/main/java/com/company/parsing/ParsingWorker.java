@@ -1,30 +1,28 @@
 package com.company.parsing;
 
-import com.company.Link;
+import com.company.saving.Saver;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ParsingWorker
+public class ParsingWorker<T>
 {
-    public ParsingWorker(ParsingSettings settings)
+    public ParsingWorker(ParsingSettings settings, Parser<T> parser, Saver<T> saver)
     {
         this.settings = settings;
+        this.parser = parser;
+        this.saver = saver;
     }
 
-    public List<Link> work()
+    public void work()
     {
-        List<Link> brokenLinks = new ArrayList<>();
-        BrokenLinksParser parser = new BrokenLinksParser();
-
         for (File file : settings.getInputFiles())
         {
             try
             {
-                brokenLinks.addAll(parser.parse(file));
+                T result = parser.parse(file);
+                saver.save(result, settings.getWriter());
             }
             catch (IOException e)
             {
@@ -36,7 +34,7 @@ public class ParsingWorker
         {
             try
             {
-                brokenLinks.addAll(parser.parse(url));
+                saver.save(parser.parse(url), settings.getWriter());
             }
             catch (IOException e)
             {
@@ -44,8 +42,17 @@ public class ParsingWorker
             }
         }
 
-        return brokenLinks;
+        try
+        {
+            settings.getWriter().close();
+        }
+        catch (IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     private ParsingSettings settings;
+    private Parser<T> parser;
+    private Saver<T> saver;
 }

@@ -64,7 +64,7 @@ public class CommandLineAnalyzer
 
     boolean thereIsOutputFile()
     {
-        return settings.getOutputFile() != null;
+        return settings.getWriter() != null;
     }
 
     void addInputFile(File file)
@@ -79,7 +79,7 @@ public class CommandLineAnalyzer
 
     void setOutputFile(FileWriter file)
     {
-        settings.setOutputFile(file);
+        settings.setWriter(file);
     }
 
     private final State startState = new StartState(this);

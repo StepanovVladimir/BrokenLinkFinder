@@ -4,14 +4,14 @@ import java.net.URL;
 
 public class Link
 {
-    public Link(URL url, int responseCode, String responseMessage)
+    public Link(String url, int responseCode, String responseMessage)
     {
         this.url = url;
         this.responseCode = responseCode;
         this.responseMessage = responseMessage;
     }
 
-    public URL getUrl()
+    public String getUrl()
     {
         return url;
     }
@@ -26,7 +26,7 @@ public class Link
         return responseMessage;
     }
 
-    private URL url;
+    private String url;
     private int responseCode;
     private String responseMessage;
 }

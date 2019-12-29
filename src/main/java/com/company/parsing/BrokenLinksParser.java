@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BrokenLinksParser
+public class BrokenLinksParser implements Parser<List<Link>>
 {
     public List<Link> parse(File file) throws IOException
     {
@@ -63,10 +63,13 @@ public class BrokenLinksParser
                 int responseCode = connection.getResponseCode();
                 if (responseCode != 200)
                 {
-                    brokenLinks.add(new Link(url, responseCode, connection.getResponseMessage()));
+                    brokenLinks.add(new Link(url.toString(), responseCode, connection.getResponseMessage()));
                 }
             }
-            catch (IOException ignored) {}
+            catch (IOException e)
+            {
+                brokenLinks.add(new Link(attr, -1, e.getMessage()));
+            }
         }
     }
 
@@ -82,10 +85,13 @@ public class BrokenLinksParser
                 int responseCode = connection.getResponseCode();
                 if (responseCode != 200)
                 {
-                    brokenLinks.add(new Link(url, responseCode, connection.getResponseMessage()));
+                    brokenLinks.add(new Link(url.toString(), responseCode, connection.getResponseMessage()));
                 }
             }
-            catch (IOException ignored) {}
+            catch (IOException e)
+            {
+                brokenLinks.add(new Link(attr, -1, e.getMessage()));
+            }
         }
     }
 }
