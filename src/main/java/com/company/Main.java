@@ -1,12 +1,10 @@
 package com.company;
 
 import com.company.commandanalysis.CommandLineAnalyzer;
-import com.company.parsing.BrokenLinksParser;
+import com.company.parsing.brokenlinks.BrokenLinksParser;
 import com.company.parsing.ParsingSettings;
 import com.company.parsing.ParsingWorker;
-import com.company.saving.LinksToCSVSaver;
-
-import java.util.List;
+import com.company.saving.LinkToCSVSaver;
 
 public class Main
 {
@@ -17,7 +15,10 @@ public class Main
             CommandLineAnalyzer analyzer = new CommandLineAnalyzer();
             ParsingSettings settings = analyzer.getParsingSettings(args);
 
-            ParsingWorker<List<Link>> parsingWorker = new ParsingWorker<>(settings, new BrokenLinksParser(), new LinksToCSVSaver());
+            BrokenLinksParser parser = new BrokenLinksParser();
+            LinkToCSVSaver saver = new LinkToCSVSaver(settings.getWriter());
+            ParsingWorker<Link> parsingWorker = new ParsingWorker<>(settings, parser, saver);
+
             parsingWorker.work();
         }
         catch (IllegalArgumentException e)

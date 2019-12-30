@@ -21,8 +21,7 @@ public class ParsingWorker<T>
         {
             try
             {
-                T result = parser.parse(file);
-                saver.save(result, settings.getWriter());
+                parser.parse(file, saver);
             }
             catch (IOException e)
             {
@@ -34,21 +33,12 @@ public class ParsingWorker<T>
         {
             try
             {
-                saver.save(parser.parse(url), settings.getWriter());
+                parser.parse(url, saver);
             }
             catch (IOException e)
             {
                 System.out.println(e.getMessage());
             }
-        }
-
-        try
-        {
-            settings.getWriter().close();
-        }
-        catch (IOException e)
-        {
-            System.out.println(e.getMessage());
         }
     }
 
