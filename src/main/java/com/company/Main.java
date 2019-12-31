@@ -1,9 +1,11 @@
 package com.company;
 
-import com.company.commandanalysis.CommandLineAnalyzer;
+import com.company.commandanalyzing.CommandLineAnalyzer;
+import com.company.entities.Link;
 import com.company.parsing.brokenlinks.BrokenLinksParser;
 import com.company.parsing.ParsingSettings;
 import com.company.parsing.ParsingWorker;
+import com.company.propertiesworking.PropertiesWorker;
 import com.company.saving.LinkToCSVSaver;
 
 public class Main
@@ -15,9 +17,13 @@ public class Main
             CommandLineAnalyzer analyzer = new CommandLineAnalyzer();
             ParsingSettings settings = analyzer.getParsingSettings(args);
 
-            BrokenLinksParser parser = new BrokenLinksParser();
+            PropertiesWorker propertiesWorker = new PropertiesWorker();
+            int threadsCount = propertiesWorker.getThreadsCount();
+
             LinkToCSVSaver saver = new LinkToCSVSaver(settings.getWriter());
-            ParsingWorker<Link> parsingWorker = new ParsingWorker<>(settings, parser, saver);
+            BrokenLinksParser parser = new BrokenLinksParser(saver, threadsCount);
+
+            ParsingWorker parsingWorker = new ParsingWorker(parser, settings);
 
             parsingWorker.work();
         }

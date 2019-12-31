@@ -1,6 +1,4 @@
-package com.company;
-
-import java.net.URL;
+package com.company.entities;
 
 public class Link
 {

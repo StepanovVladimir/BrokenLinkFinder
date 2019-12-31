@@ -1,4 +1,4 @@
-package com.company.commandanalysis;
+package com.company.commandanalyzing;
 
 import com.company.parsing.ParsingSettings;
 

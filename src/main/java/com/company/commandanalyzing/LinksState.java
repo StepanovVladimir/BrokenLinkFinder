@@ -1,4 +1,4 @@
-package com.company.commandanalysis;
+package com.company.commandanalyzing;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -37,7 +37,7 @@ class LinksState implements State
         {
             throw new IllegalArgumentException(NO_LINKS_SPECIFIED_MESSAGE);
         }
-        analyzer.setLinksState();
+        analyzer.setFilesState();
     }
 
     private void setOutState()

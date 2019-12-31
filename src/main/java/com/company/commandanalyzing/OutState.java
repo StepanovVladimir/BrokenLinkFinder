@@ -1,6 +1,5 @@
-package com.company.commandanalysis;
+package com.company.commandanalyzing;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
 package com.company.parsing.brokenlinks;
 
-import com.company.Link;
+import com.company.entities.Link;
 import com.company.saving.Saver;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
 package com.company.parsing.brokenlinks;
 
-import com.company.Link;
+import com.company.entities.Link;
 import com.company.parsing.Parser;
 import com.company.saving.Saver;
 import org.jsoup.Jsoup;
@@ -8,57 +8,50 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 
-public class BrokenLinksParser implements Parser<Link>
+public class BrokenLinksParser implements Parser
 {
-    public BrokenLinksParser()
+    public BrokenLinksParser(Saver<Link> linkSaver, int threadsCount)
     {
-        try
-        {
-            FileInputStream fileInputStream = new FileInputStream("src/main/resources/config.properties");
-            Properties properties = new Properties();
-            properties.load(fileInputStream);
-            threadsCount = Integer.parseInt(properties.getProperty("threadsCount"));
-        }
-        catch (IOException|NumberFormatException ignored){}
+        this.linkSaver = linkSaver;
+        this.threadsCount = threadsCount;
     }
 
-    public void parse(File file, Saver<Link> linkSaver) throws IOException
+    public void parse(File file) throws IOException
     {
         Document document = Jsoup.parse(file, String.valueOf(StandardCharsets.UTF_8));
-        parseBrokenLinks(document.getAllElements(), linkSaver);
+        parseBrokenLinks(document.getAllElements());
     }
 
-    public void parse(URL url, Saver<Link> linkSaver) throws IOException
+    public void parse(URL url) throws IOException
     {
         Document document = Jsoup.connect(url.toString()).get();
-        parseBrokenLinks(document.getAllElements(), url, linkSaver);
+        parseBrokenLinks(document.getAllElements(), url);
     }
 
-    private int threadsCount = 0;
+    private Saver<Link> linkSaver;
+    private int threadsCount;
 
-    private void parseBrokenLinks(Elements elements, Saver<Link> linkSaver)
+    private void parseBrokenLinks(Elements elements)
     {
         elements.forEach(element -> {
-            saveBrokenLink(element.attr("href"), linkSaver);
-            saveBrokenLink(element.attr("src"), linkSaver);
+            saveBrokenLink(element.attr("href"));
+            saveBrokenLink(element.attr("src"));
         });
     }
 
-    private void parseBrokenLinks(Elements elements, URL baseUrl, Saver<Link> linkSaver)
+    private void parseBrokenLinks(Elements elements, URL baseUrl)
     {
         elements.forEach(element -> {
-            saveBrokenLink(element.attr("href"), baseUrl, linkSaver);
-            saveBrokenLink(element.attr("src"), baseUrl, linkSaver);
+            saveBrokenLink(element.attr("href"), baseUrl);
+            saveBrokenLink(element.attr("src"), baseUrl);
         });
     }
 
-    private void saveBrokenLink(String attr, Saver<Link> linkSaver)
+    private void saveBrokenLink(String attr)
     {
         if (!attr.isEmpty() && !attr.equals("#"))
         {
@@ -74,7 +67,7 @@ public class BrokenLinksParser implements Parser<Link>
         }
     }
 
-    private void saveBrokenLink(String attr, URL baseUrl, Saver<Link> linkSaver)
+    private void saveBrokenLink(String attr, URL baseUrl)
     {
         if (!attr.isEmpty() && !attr.equals("#"))
         {

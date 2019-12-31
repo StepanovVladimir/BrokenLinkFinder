@@ -1,4 +1,4 @@
-package com.company.commandanalysis;
+package com.company.commandanalyzing;
 
 class StartState implements State
 {
