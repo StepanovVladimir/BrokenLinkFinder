@@ -62,7 +62,7 @@ public class BrokenLinksParser implements Parser
             }
             catch (IOException e)
             {
-                linkSaver.save(new Link(attr, -1, e.getMessage()));
+                linkSaver.save(new Link(attr, 404, e.getMessage()));
             }
         }
     }
@@ -78,7 +78,7 @@ public class BrokenLinksParser implements Parser
             }
             catch (IOException e)
             {
-                linkSaver.save(new Link(attr, -1, e.getMessage()));
+                linkSaver.save(new Link(attr, 404, e.getMessage()));
             }
         }
     }

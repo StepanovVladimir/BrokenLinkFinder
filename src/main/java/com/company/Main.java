@@ -1,7 +1,6 @@
 package com.company;
 
 import com.company.commandanalyzing.CommandLineAnalyzer;
-import com.company.entities.Link;
 import com.company.parsing.brokenlinks.BrokenLinksParser;
 import com.company.parsing.ParsingSettings;
 import com.company.parsing.ParsingWorker;

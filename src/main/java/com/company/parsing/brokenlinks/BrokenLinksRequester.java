@@ -22,7 +22,7 @@ public class BrokenLinksRequester implements Runnable
         {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             int responseCode = connection.getResponseCode();
-            if (responseCode != 200)
+            if (responseCode / 100 != 2)
             {
                 linkSaver.save(new Link(url.toString(), responseCode, connection.getResponseMessage()));
             }
