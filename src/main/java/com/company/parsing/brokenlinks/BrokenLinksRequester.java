@@ -21,6 +21,8 @@ public class BrokenLinksRequester implements Runnable
         try
         {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
             int responseCode = connection.getResponseCode();
             if (responseCode / 100 != 2)
             {
@@ -29,7 +31,7 @@ public class BrokenLinksRequester implements Runnable
         }
         catch (IOException e)
         {
-            System.out.println(e.getMessage());
+            linkSaver.save(new Link(url.toString(), 504, e.getMessage()));
         }
     }
 
