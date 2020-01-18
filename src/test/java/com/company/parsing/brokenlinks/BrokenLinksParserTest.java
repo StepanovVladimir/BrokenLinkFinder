@@ -15,7 +15,7 @@ public class BrokenLinksParserTest
     public void parseFile() throws IOException
     {
         MockSaver saver = new MockSaver();
-        BrokenLinksParser parser = new BrokenLinksParser(saver, 0);
+        BrokenLinksParser parser = new BrokenLinksParser(saver, 0, 10000);
 
         parser.parse(new File("src/main/resources/input.html"));
 
@@ -26,7 +26,7 @@ public class BrokenLinksParserTest
     public void parseUrl() throws IOException
     {
         MockSaver saver = new MockSaver();
-        BrokenLinksParser parser = new BrokenLinksParser(saver, 15);
+        BrokenLinksParser parser = new BrokenLinksParser(saver, 7, 10000);
 
         parser.parse(new URL("http://52.136.215.164/broken-links/"));
 

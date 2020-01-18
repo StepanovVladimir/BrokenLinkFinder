@@ -14,10 +14,11 @@ import java.nio.charset.StandardCharsets;
 
 public class BrokenLinksParser implements Parser
 {
-    public BrokenLinksParser(Saver<Link> linkSaver, int threadsCount)
+    public BrokenLinksParser(Saver<Link> linkSaver, int threadsCount, int connectTimeout)
     {
         this.linkSaver = linkSaver;
         this.threadsCount = threadsCount;
+        this.connectTimeout = connectTimeout;
     }
 
     public void parse(File file) throws IOException
@@ -34,6 +35,7 @@ public class BrokenLinksParser implements Parser
 
     private Saver<Link> linkSaver;
     private int threadsCount;
+    private int connectTimeout;
 
     private void parseBrokenLinks(Elements elements)
     {
@@ -87,12 +89,12 @@ public class BrokenLinksParser implements Parser
     {
         if (Thread.activeCount() < threadsCount)
         {
-            Thread thread = new Thread(new BrokenLinksRequester(url, linkSaver));
+            Thread thread = new Thread(new BrokenLinksRequester(url, linkSaver, connectTimeout));
             thread.start();
         }
         else
         {
-            BrokenLinksRequester requester = new BrokenLinksRequester(url, linkSaver);
+            BrokenLinksRequester requester = new BrokenLinksRequester(url, linkSaver, connectTimeout);
             requester.run();
         }
     }

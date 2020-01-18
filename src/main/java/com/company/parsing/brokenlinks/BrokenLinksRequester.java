@@ -7,12 +7,13 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class BrokenLinksRequester implements Runnable
+class BrokenLinksRequester implements Runnable
 {
-    public BrokenLinksRequester(URL url, Saver<Link> linkSaver)
+    public BrokenLinksRequester(URL url, Saver<Link> linkSaver, int connectTimeout)
     {
         this.url = url;
         this.linkSaver = linkSaver;
+        this.connectTimeout = connectTimeout;
     }
 
     @Override
@@ -21,8 +22,8 @@ public class BrokenLinksRequester implements Runnable
         try
         {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            connection.setConnectTimeout(10000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(connectTimeout);
+            connection.setReadTimeout(connectTimeout);
             int responseCode = connection.getResponseCode();
             if (responseCode / 100 != 2)
             {
@@ -37,4 +38,5 @@ public class BrokenLinksRequester implements Runnable
 
     private URL url;
     private Saver<Link> linkSaver;
+    private int connectTimeout;
 }

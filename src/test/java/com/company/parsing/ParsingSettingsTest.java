@@ -2,7 +2,6 @@ package com.company.parsing;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 

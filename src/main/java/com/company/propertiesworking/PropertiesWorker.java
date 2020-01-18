@@ -6,18 +6,35 @@ import java.util.Properties;
 
 public class PropertiesWorker
 {
+    public PropertiesWorker(String path) throws IOException
+    {
+        FileInputStream fileInputStream = new FileInputStream(path);
+        properties.load(fileInputStream);
+    }
+
     public int getThreadsCount()
     {
         try
         {
-            FileInputStream fileInputStream = new FileInputStream("src/main/resources/config.properties");
-            Properties properties = new Properties();
-            properties.load(fileInputStream);
             return Integer.parseInt(properties.getProperty("threadsCount"));
         }
-        catch (IOException|NumberFormatException e)
+        catch (NumberFormatException e)
         {
             return 0;
         }
     }
+
+    public int getConnectTimeout()
+    {
+        try
+        {
+            return Integer.parseInt(properties.getProperty("connectTimeout"));
+        }
+        catch (NumberFormatException e)
+        {
+            return 10000;
+        }
+    }
+
+    Properties properties = new Properties();
 }

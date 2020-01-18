@@ -15,7 +15,7 @@ public class BrokenLinksRequesterTest
     public void runValidLink() throws IOException
     {
         MockSaver saver = new MockSaver();
-        BrokenLinksRequester requester = new BrokenLinksRequester(new URL("http://52.136.215.164/broken-links/"), saver);
+        BrokenLinksRequester requester = new BrokenLinksRequester(new URL("http://52.136.215.164/broken-links/"), saver, 10000);
 
         requester.run();
 
@@ -29,7 +29,7 @@ public class BrokenLinksRequesterTest
         String url = "http://52.136.215.164/links/return500bad.php";
         int responseCode = 500;
         String responseMessage = "Internal Server Error";
-        BrokenLinksRequester requester = new BrokenLinksRequester(new URL(url), saver);
+        BrokenLinksRequester requester = new BrokenLinksRequester(new URL(url), saver, 10000);
 
         requester.run();
 
